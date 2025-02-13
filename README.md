@@ -31,7 +31,8 @@ AntiPornExtension is a browser extension designed to **block adult websites** an
 - The extension prevents the user from accessing the blocked content.
 
 ## 📷 Screenshots
-*(Add screenshots of the extension in action here)*
+![image](https://github.com/user-attachments/assets/d24e648b-4960-419e-a036-89e97be7b22c)
+
 
 ## 🛠 Technologies Used
 - **JavaScript (Manifest V3)**
