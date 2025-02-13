@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تذكرة من القرآن</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap');
+
+        body {
+            font-family: 'Amiri Quran', serif;
+            text-align: center;
+            background-color: #222;
+            color: #fff;
+            padding: 50px;
+        }
+
+        #ayah {
+            font-size: 28px;
+            margin: 20px;
+            direction: rtl;
+            line-height: 1.8;
+        }
+
+        #audio {
+            margin-top: 20px;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>تذكر الله وابتعد عن الحرام!</h1>
+    <p id="ayah">جارٍ جلب الآية...</p>
+    <audio id="audio" controls autoplay></audio>
+
+    <footer>
+        <p>تم التطوير بواسطة <strong>إياد سغيري</strong></p>
+        <p>🌐 موقعي: <a href="https://ayadseghiri.me/" target="_blank">ayadseghiri.me</a></p>
+        <p>📱 تابعني على:
+            <a href="https://facebook.com/ayad.seghiri" target="_blank">Facebook</a> |
+            <a href="https://github.com/ayadseghairi" target="_blank"> GitHub</a> |
+            <a href="https://www.linkedin.com/in/ayad-seghiri/" target="_blank"> Linkedin</a>
+        </p>
+    </footer>
+
+    <script>
+        async function getRandomAyah() {
+            try {
+                let timestamp = new Date().getTime(); // لمنع التخزين المؤقت وجلب آية جديدة
+                let response = await fetch(`https://api.alquran.cloud/v1/ayah/random/ar.alafasy?nocache=${timestamp}`);
+                let data = await response.json();
+                
+                let ayahText = data.data.text;
+                let surah = data.data.surah.name;
+                let ayahNumber = data.data.numberInSurah;
+                let audioUrl = data.data.audio;
+
+                // تحديث الصفحة بالآية واسم السورة ورقم الآية
+                document.getElementById("ayah").innerText = `${ayahText} \n [${surah} - ${ayahNumber}]`;
+
+                // تشغيل الصوت تلقائيًا
+                let audioPlayer = document.getElementById("audio");
+                audioPlayer.src = audioUrl;
+                audioPlayer.play();
+            } catch (error) {
+                document.getElementById("ayah").innerText = "⚠️ حدث خطأ أثناء تحميل الآية!";
+            }
+        }
+
+        getRandomAyah();
+    </script>
+</body>
+</html>
